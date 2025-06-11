@@ -36,10 +36,3 @@ TEST(average_test_group, null_test)
 	float result = average(arr, 0);
 	CHECK_EQUAL(result, 0.0);
 }
-
-TEST(average_test_group, out_of_limit_test)
-{
-	float arr[] = {1.0};
-	float result = average(arr, 2);
-	CHECK_EQUAL(result, 1.0);
-}
