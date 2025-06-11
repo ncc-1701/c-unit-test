@@ -1,0 +1,33 @@
+# Test workflow must be triggered by push event
+name: Unit tests Workflow
+on: [push]
+
+# Jobs of the test's workflow
+jobs:
+    # Print the current stage
+    notif-start:
+        runs-on: ubuntu-22.04
+        steps:
+        - name: Print the current stage
+          run: echo "Start unit tests."
+
+    # Next build the project and test the binary
+    build-and-test:
+        needs: [notif-start]
+        runs-on: ubuntu-22.04
+        steps:
+            # Checkout the repo
+          - name: Check out the repo
+            uses: actions/checkout@v3
+
+            # Install the necessary packages
+          - name: Install prerequirements
+            run: sudo apt-get install -y docker
+      
+            # Build Docker image
+          - name: Build Docker image
+            run: docker build -t unit-test-image .
+            
+            # Run Docker image
+          - name: Run Docker image
+            run: docker run --rm unit-test-image
